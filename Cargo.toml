@@ -2,5 +2,9 @@
 name = "todo-rs"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0-only"
+description = "A simple to-do list app written in rust"
 
 [dependencies]
+colored = "2"
+

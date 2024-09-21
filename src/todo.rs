@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::{Write, Result, BufRead, BufReader, BufWriter};
 use std::env;
 use std::process;
+use colored::Colorize;
 
 pub struct Todo {
     todo_path: String
@@ -20,7 +21,11 @@ impl Todo {
         let reader = BufReader::new(file);
         for (index, line) in reader.lines().enumerate() {
             let task = line.unwrap();
-            println!("{:>2}. {}", index + 1, task);
+            if &task[..3] == "[x]" {
+                println!("{:>2}. {}", index + 1, &task[4..].strikethrough());
+            } else {
+                println!("{:>2}. {}", (index + 1).to_string().yellow(), &task[4..]);
+            }
         }
         Ok(())
     }
@@ -89,25 +94,4 @@ impl Todo {
 
         Ok(())
     }
-}
-
-const TODO_HELP: &str = "Usage: todo-rs [COMMAND] [ARGUMENTS]
-Todo is a simple to-do app.
-Example: todo (lists all tasks)
-Available commands:
-    - add [TASK/s]
-        adds new task/s
-        Example: todo add \"write to-do app\" \"test it\"
-    - list
-        lists all tasks
-        Example: todo list
-    - done [INDEX]
-        marks task as done
-        Example: todo done 2 3 (marks second and third tasks as completed)
-    - clear
-        clears all done tasks
-        Example: todo clear
-        ";
-pub fn help() {
-    println!("{}", TODO_HELP);
 }
