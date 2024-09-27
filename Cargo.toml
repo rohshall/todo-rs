@@ -7,4 +7,4 @@ description = "A simple to-do list app written in rust"
 
 [dependencies]
 colored = "2"
-
+dirs = "5"
